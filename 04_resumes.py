@@ -9,18 +9,26 @@ def extract_text_from_pdf(pdf_path):
             text += page.extract_text()
     return text
 
-# Path to the PDF file in the same directory
-pdf_path = 'test.pdf'
+def process_multiple_pdfs(pdf_paths):
+    for pdf_path in pdf_paths:
+        full_path = os.path.join(os.getcwd(), pdf_path)
+        print(f"Processing file: {full_path}")
+        if os.path.exists(pdf_path):
+            print(extract_text_from_pdf(pdf_path))
+        else:
+            print(f"File not found: {pdf_path}")
+
+# Get PDF files from user input
+pdf_files = input("Enter the names of PDF files separated by commas: ").split(',')
+
+# Strip any extra spaces from file names
+pdf_files = [pdf_file.strip() for pdf_file in pdf_files]
 
 # Print the current working directory
 print(f"Current working directory: {os.getcwd()}")
 
-# Print the full path to the file
-full_path = os.path.join(os.getcwd(), pdf_path)
-print(f"Full path to the PDF: {full_path}")
+# List files in the current directory
+print(f"Files in current directory: {os.listdir(os.getcwd())}")
 
-# Check if the file exists
-if os.path.exists(pdf_path):
-    print(extract_text_from_pdf(pdf_path))
-else:
-    print(f"File not found: {pdf_path}")
+# Process each PDF file
+process_multiple_pdfs(pdf_files)
