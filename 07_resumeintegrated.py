@@ -48,13 +48,15 @@ def calculate_score(resume_text, keywords):
     resume_counter = Counter(resume_words)
     
     total_score = 0
+    max_possible_score = len(keywords)
     keyword_scores = {}
     for keyword in keywords:
         count = resume_counter[keyword.lower()]
         keyword_scores[keyword] = count
         total_score += count
     
-    return total_score, keyword_scores
+    percentage_score = (total_score / max_possible_score) * 100
+    return percentage_score, keyword_scores
 
 def main():
     # Get recruiter input
@@ -78,8 +80,8 @@ def main():
 
     # Calculate and print the score for each resume
     for file_name, text in resume_texts.items():
-        total_score, keyword_scores = calculate_score(text, recruiter_keywords)
-        print(f"\nMatching score for {file_name}: {total_score}")
+        percentage_score, keyword_scores = calculate_score(text, recruiter_keywords)
+        print(f"\nMatching score for {file_name}: {percentage_score:.2f}%")
         for keyword, score in keyword_scores.items():
             print(f"  - {keyword}: {score}")
 
